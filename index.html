@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Drone - Flight Simulator</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Maps API Loader -->
+    <script>
+        (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+            key: "GOOGLE_MAPS_API_KEY_PLACEHOLDER",
+            v: "alpha",
+            internalUsageAttributionIds: "gmp_mcp_codeassist_v0.1_github"
+        });
+    </script>
+</head>
+<body>
+    <div id="hud">
+        <!-- Debug Console -->
+        <div id="debug-console" style="
+            position: absolute; 
+            bottom: 10px; 
+            left: 10px; 
+            width: 400px; 
+            height: 100px; 
+            background: rgba(0,0,0,0.7); 
+            color: lime; 
+            font-family: monospace; 
+            font-size: 10px; 
+            overflow-y: auto; 
+            pointer-events: auto;
+            z-index: 200;
+            border: 1px solid lime;
+            display: none; /* Hidden by default, toggled via JS if needed or just always show for now */
+        "></div>
+
+        <!-- ... existing HUD ... -->
+        <div class="hud-top">
+            <div class="telemetry">
+                <div class="stat">ALT: <span id="val-alt">0</span>m</div>
+                <div class="stat">SPD: <span id="val-spd">0</span>kn <div class="speed-bar-bg"><div id="speed-fill"></div></div></div>
+            </div>
+            <div class="autopilot-controls">
+                <div id="flight-mode">MODE: MANUAL</div>
+                <div class="inputs">
+                    <input type="text" id="start-input" placeholder="Start (Empty = Current Loc)">
+                    <input type="text" id="dest-input" placeholder="Destination (e.g. Toronto)">
+                </div>
+                <button id="btn-fly">GET DIRECTIONS</button>
+            </div>
+            <div class="compass">
+                HDG: <span id="val-hdg">0</span>°
+            </div>
+        </div>
+
+        <!-- NEW: Places Search Panel -->
+        <div id="places-panel">
+            <div class="panel-header">
+                <span>NEARBY SEARCH</span>
+                <button id="btn-toggle-places">_</button>
+            </div>
+            <div class="panel-body">
+                <div class="search-row">
+                    <input type="text" id="place-search-input" placeholder="e.g. Pizza, Gas Station">
+                    <button id="btn-search-places">SCAN</button>
+                </div>
+                <div id="places-list">
+                    <!-- Results will appear here -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="drone-overlay">
+            <img src="assets/drone.png" alt="Drone View" id="drone-sprite">
+        </div>
+
+        <div class="hud-bottom">
+            <div class="controls-hint">
+                [WASD] Fly | [SPACE] Thrust | [SHIFT] Boost | [SCROLL] Zoom/Alt | [Z/X] Space/Ground
+            </div>
+            <div class="location-info">
+                LAT: <span id="val-lat">0</span> | LNG: <span id="val-lng">0</span>
+            </div>
+        </div>
+    </div>
+
+    <gmp-map-3d id="map" center="37.7749,-122.4194,500" tilt="67.5" heading="0" range="1000" mode="HYBRID"></gmp-map-3d>
+
+    <script src="app.js" type="module"></script>
+</body>
+</html>

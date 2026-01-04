@@ -1,0 +1,297 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: #000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#map, gmp-map-3d {
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+
+#hud {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    pointer-events: none; /* Let clicks pass through to the map */
+
+    z-index: 10;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+    color: #00f2ff;
+
+    text-shadow: 0 0 5px rgba(0, 242, 255, 0.7);
+
+}
+
+
+
+.hud-top, .hud-bottom {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    background: rgba(0, 20, 40, 0.4);
+
+    backdrop-filter: blur(5px);
+
+    border: 1px solid rgba(0, 242, 255, 0.3);
+
+    padding: 10px 20px;
+
+    border-radius: 4px;
+
+    pointer-events: auto; /* Re-enable pointer events for buttons/inputs */
+
+}
+
+
+
+/* Places Search Panel */
+#places-panel {
+    position: absolute;
+    top: 100px;
+    right: 20px;
+    width: 300px;
+    background: rgba(0, 20, 40, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid #00f2ff;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto; /* Enable clicks */
+    z-index: 100; /* Ensure it is above everything */
+    max-height: 70%;
+    transition: transform 0.3s ease;
+}
+
+.panel-header {
+    background: rgba(0, 242, 255, 0.1);
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 242, 255, 0.3);
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.panel-body {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+}
+
+.search-row {
+    display: flex;
+    gap: 5px;
+}
+
+#place-search-input {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #00f2ff;
+    color: #00f2ff;
+    padding: 5px;
+    flex-grow: 1;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#btn-search-places {
+    background: rgba(0, 242, 255, 0.2);
+    border: 1px solid #00f2ff;
+    color: #00f2ff;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#btn-search-places:hover {
+    background: rgba(0, 242, 255, 0.5);
+}
+
+#places-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    overflow-y: auto;
+    max-height: 400px;
+    padding-right: 5px;
+}
+
+/* Scrollbar styling */
+#places-list::-webkit-scrollbar {
+    width: 5px;
+}
+#places-list::-webkit-scrollbar-thumb {
+    background: #00f2ff;
+    border-radius: 2px;
+}
+
+.place-item {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 242, 255, 0.2);
+    padding: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.place-item:hover {
+    background: rgba(0, 242, 255, 0.2);
+    border-color: #00f2ff;
+}
+
+.place-name {
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 2px;
+}
+
+.place-addr {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Telemetry & Autopilot Styles */
+.telemetry, .compass, .location-info, .controls-hint {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.stat {
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.speed-bar-bg {
+    width: 100px;
+    height: 8px;
+    background: rgba(0, 242, 255, 0.1);
+    border: 1px solid rgba(0, 242, 255, 0.3);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+#speed-fill {
+    width: 0%;
+    height: 100%;
+    background: #00f2ff;
+    box-shadow: 0 0 10px #00f2ff;
+    transition: width 0.1s ease;
+}
+
+#flight-mode {
+    font-size: 0.8rem;
+    color: #fff;
+    background: #ff3c00;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-right: 10px;
+    text-shadow: none;
+    letter-spacing: 1px;
+}
+
+.autopilot-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#start-input, #dest-input {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #00f2ff;
+    color: #00f2ff;
+    padding: 5px 10px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    width: 250px;
+}
+
+#btn-fly {
+    height: 100%;
+    background: rgba(0, 242, 255, 0.2);
+    border: 1px solid #00f2ff;
+    color: #00f2ff;
+    padding: 15px 15px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#btn-fly:hover {
+    background: rgba(0, 242, 255, 0.5);
+    box-shadow: 0 0 10px #00f2ff;
+}
+
+.drone-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 5; /* Below the HUD controls but above the map */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+#drone-sprite {
+
+    width: 200px;
+
+    opacity: 0.8;
+
+    filter: drop-shadow(0 0 15px rgba(0, 242, 255, 0.5));
+
+    transition: transform 0.1s ease-out;
+
+    /* Prevent selection and dragging */
+
+    user-select: none;
+
+    -webkit-user-drag: none;
+
+}
+
+
+
+/* Removed Reticle/Crosshair pseudo-elements */

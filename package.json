@@ -1,0 +1,14 @@
+{
+  "name": "google-drone",
+  "version": "1.0.0",
+  "description": "3D Drone Flight Simulator using Google Maps Platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "google-maps": "^4.3.3"
+  }
+}
